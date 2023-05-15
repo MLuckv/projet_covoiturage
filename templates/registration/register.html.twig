@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-	<section class="container">
+	<section class="container my-5">
 		<div class="row">
 			<div class="col">
 				<h1>Inscription</h1>
@@ -17,7 +17,8 @@
         }) }}
 				{{ form_row(registrationForm.agreeTerms) }}
 
-				<button type="submit" class="btn">M'inscrire</button>
+				<button type="submit" class="btn btn btn-lg btn-primary">M'inscrire</button>
+				<a class="btn btn-lg btn-secondary" href="{{ path('app_login') }}">Me connecter</a>
 				{{ form_end(registrationForm) }}
 			</div>
 		</div>
