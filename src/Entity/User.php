@@ -53,6 +53,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $created_at;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $num_tel;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -174,6 +185,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getNumTel(): ?string
+    {
+        return $this->num_tel;
+    }
+
+    public function setNumTel(string $num_tel): self
+    {
+        $this->num_tel = $num_tel;
 
         return $this;
     }

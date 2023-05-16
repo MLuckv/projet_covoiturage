@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,6 +24,9 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class,[
                 'label' => 'E-mail'
             ]) //rajouter nouveaux ligne si nouveau champ user
+            ->add('num_tel', TelType::class,[
+                'label' => 'Numéro de Téléphone'
+            ])
             ->add('lastname', TextType::class, [
                 'label'=>'Nom'])
             ->add('firstname', TextType::class, [
