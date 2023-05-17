@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demande envoyer{% endblock %}
+
+{% block body %}
+<div class="mt-4 ml-2">
+    <p>
+        Si votre compte existe et correspond avec l'email, un email sera envoyé avec un lien afin de renitialiser votre mot de passe.
+        <br>Le lien expire <strong>{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</strong>
+    <br>Si vous ne recevez pas d'email, veuiller regarder dans vos spams ou cliquer sur le lien suivant <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+</div>{% endblock %}

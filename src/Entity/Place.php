@@ -15,7 +15,7 @@ class Place
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-     private $id;
+    private $id;
 
     /**
      * @ORM\Column(type="integer")
@@ -28,13 +28,13 @@ class Place
     private $prix_place;
 
     /**
-     * @ORM\OneToOne(targetEntity=voyage::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=voyage::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $voy_id;
 
     /**
-     * @ORM\OneToOne(targetEntity=user::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=user::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $user_id;
@@ -73,7 +73,7 @@ class Place
         return $this->voy_id;
     }
 
-    public function setVoyId(voyage $voy_id): self
+    public function setVoyId(?voyage $voy_id): self
     {
         $this->voy_id = $voy_id;
 
@@ -85,7 +85,7 @@ class Place
         return $this->user_id;
     }
 
-    public function setUserId(user $user_id): self
+    public function setUserId(?user $user_id): self
     {
         $this->user_id = $user_id;
 

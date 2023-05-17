@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Changer mot de passe{% endblock %}
+
+{% block body %}
+	<section class="container my-5">
+		<div class="row">
+			<div class="col">
+				<h1>Changer votre mot de passe</h1>
+
+				{{ form_start(resetForm) }}
+				{{ form_row(resetForm.plainPassword) }}
+				<button class="btn btn-primary">Confirmer</button>
+				{{ form_end(resetForm) }}
+			</div>
+		</div>
+	</section>
+{% endblock %}
