@@ -31,13 +31,13 @@ class Place
      * @ORM\ManyToOne(targetEntity=Voyage::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $voy_id;
+    private $voy;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $user;
 
     public function getId(): ?int
     {
@@ -68,26 +68,26 @@ class Place
         return $this;
     }
 
-    public function getVoyId(): ?voyage
+    public function getVoy(): ?voyage
     {
-        return $this->voy_id;
+        return $this->voy;
     }
 
-    public function setVoyId(?voyage $voy_id): self
+    public function setVoy(?voyage $voy): self
     {
-        $this->voy_id = $voy_id;
+        $this->voy = $voy;
 
         return $this;
     }
 
-    public function getUserId(): ?user
+    public function getUser(): ?user
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?user $user_id): self
+    public function setUser(?user $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }

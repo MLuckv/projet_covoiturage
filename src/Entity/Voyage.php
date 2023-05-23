@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-
 use App\Repository\VoyageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Voyage
 {
+    
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -63,9 +64,20 @@ class Voyage
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->slug = uniqid();
     }
 
     public function getId(): ?int
@@ -164,6 +176,30 @@ class Voyage
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
