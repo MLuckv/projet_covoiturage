@@ -30,7 +30,7 @@ class Departement
     private $nom_departement;
 
     /**
-     * @ORM\OneToMany(targetEntity=Ville::class, mappedBy="code_departement", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Ville::class, mappedBy="departement", orphanRemoval=true)
      */
     private $villes;
 
@@ -80,7 +80,7 @@ class Departement
     {
         if (!$this->villes->contains($ville)) {
             $this->villes[] = $ville;
-            $ville->setCodeDepartement($this);
+            $ville->setDepartement($this);
         }
 
         return $this;
@@ -90,8 +90,8 @@ class Departement
     {
         if ($this->villes->removeElement($ville)) {
             // set the owning side to null (unless already changed)
-            if ($ville->getCodeDepartement() === $this) {
-                $ville->setCodeDepartement(null);
+            if ($ville->getDepartement() === $this) {
+                $ville->setDepartement(null);
             }
         }
 

@@ -31,18 +31,18 @@ class Ville
     private $nom_ville;
 
     /**
-     * @ORM\ManyToOne(targetEntity=departement::class, inversedBy="villes")
+     * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="villes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $code_departement;
+    private $departement;
 
     /**
-     * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="code_ville_depart", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="ville_depart", orphanRemoval=true)
      */
     private $voyage_deb;
 
     /**
-     * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="code_ville_arrive")
+     * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="ville_arrive")
      */
     private $voyage_fin;
 
@@ -81,14 +81,14 @@ class Ville
         return $this;
     }
 
-    public function getCodeDepartement(): ?departement
+    public function getDepartement(): ?departement
     {
-        return $this->code_departement;
+        return $this->departement;
     }
 
-    public function setCodeDepartement(?departement $code_departement): self
+    public function setDepartement(?departement $departement): self
     {
-        $this->code_departement = $code_departement;
+        $this->departement = $departement;
 
         return $this;
     }
@@ -105,7 +105,7 @@ class Ville
     {
         if (!$this->voyage_deb->contains($voyageDeb)) {
             $this->voyage_deb[] = $voyageDeb;
-            $voyageDeb->setCodeVilleDepart($this);
+            $voyageDeb->setVilleDepart($this);
         }
 
         return $this;
@@ -115,8 +115,8 @@ class Ville
     {
         if ($this->voyage_deb->removeElement($voyageDeb)) {
             // set the owning side to null (unless already changed)
-            if ($voyageDeb->getCodeVilleDepart() === $this) {
-                $voyageDeb->setCodeVilleDepart(null);
+            if ($voyageDeb->getVilleDepart() === $this) {
+                $voyageDeb->setVilleDepart(null);
             }
         }
 
@@ -135,7 +135,7 @@ class Ville
     {
         if (!$this->voyage_fin->contains($voyageFin)) {
             $this->voyage_fin[] = $voyageFin;
-            $voyageFin->setCodeVilleArrive($this);
+            $voyageFin->setVilleArrive($this);
         }
 
         return $this;
@@ -145,8 +145,8 @@ class Ville
     {
         if ($this->voyage_fin->removeElement($voyageFin)) {
             // set the owning side to null (unless already changed)
-            if ($voyageFin->getCodeVilleArrive() === $this) {
-                $voyageFin->setCodeVilleArrive(null);
+            if ($voyageFin->getVilleArrive() === $this) {
+                $voyageFin->setVilleArrive(null);
             }
         }
 

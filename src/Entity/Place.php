@@ -28,13 +28,13 @@ class Place
     private $prix_place;
 
     /**
-     * @ORM\ManyToOne(targetEntity=voyage::class)
+     * @ORM\ManyToOne(targetEntity=Voyage::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $voy_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class)
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $user_id;

@@ -33,27 +33,40 @@ class Voyage
     private $heure_arrive;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ville::class, inversedBy="voyage_deb")
+     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="voyage_deb")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $code_ville_depart;
+    private $ville_depart;
+
+    // si problème Case mismatch between loaded and declared class names: "App\Entity\user" vs "App\Entity\User". doit changer les min en maj avant les variable dans le fichier concerné
 
     /**
-     * @ORM\ManyToOne(targetEntity=ville::class, inversedBy="voyage_fin")
-     */
-    private $code_ville_arrive;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=vehicule::class, inversedBy="voyage_veh")
+     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="voyage_fin")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $vehicule_id;
+    private $ville_arrive;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class)
+     * @ORM\ManyToOne(targetEntity=Vehicule::class, inversedBy="voyage_veh")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $vehicule;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $created_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -96,50 +109,61 @@ class Voyage
         return $this;
     }
 
-    public function getCodeVilleDepart(): ?ville
+    public function getVilleDepart(): ?ville
     {
-        return $this->code_ville_depart;
+        return $this->ville_depart;
     }
 
-    public function setCodeVilleDepart(?ville $code_ville_depart): self
+    public function setVilleDepart(?ville $ville_depart): self
     {
-        $this->code_ville_depart = $code_ville_depart;
+        $this->ville_depart = $ville_depart;
 
         return $this;
     }
 
-    public function getCodeVilleArrive(): ?ville
+    public function getVilleArrive(): ?ville
     {
-        return $this->code_ville_arrive;
+        return $this->ville_arrive;
     }
 
-    public function setCodeVilleArrive(?ville $code_ville_arrive): self
+    public function setVilleArrive(?ville $ville_arrive): self
     {
-        $this->code_ville_arrive = $code_ville_arrive;
+        $this->ville_arrive = $ville_arrive;
 
         return $this;
     }
 
-    public function getVehiculeId(): ?vehicule
+    public function getVehicule(): ?vehicule
     {
-        return $this->vehicule_id;
+        return $this->vehicule;
     }
 
-    public function setVehiculeId(?vehicule $vehicule_id): self
+    public function setVehicule(?vehicule $vehicule): self
     {
-        $this->vehicule_id = $vehicule_id;
+        $this->vehicule = $vehicule;
 
         return $this;
     }
 
-    public function getUserId(): ?user
+    public function getUser(): ?user
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?user $user_id): self
+    public function setUser(?user $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
+
+        return $this;
+    }
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

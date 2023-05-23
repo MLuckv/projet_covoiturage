@@ -19,11 +19,6 @@ class Vehicule
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-
-    //private $vehicule_id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -46,7 +41,7 @@ class Vehicule
     private $couleur;
 
     /**
-     * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="vehicule_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="vehicule", orphanRemoval=true)
      */
     private $voyage_veh;
 
@@ -59,18 +54,6 @@ class Vehicule
     {
         return $this->id;
     }
-
-    /*public function getVehiculeId(): ?int
-    {
-        return $this->vehicule_id;
-    }
-
-    public function setVehiculeId(int $vehicule_id): self
-    {
-        $this->vehicule_id = $vehicule_id;
-
-        return $this;
-    }*/
 
     public function getImmatriculation(): ?string
     {
@@ -132,7 +115,7 @@ class Vehicule
     {
         if (!$this->voyage_veh->contains($voyageVeh)) {
             $this->voyage_veh[] = $voyageVeh;
-            $voyageVeh->setVehiculeId($this);
+            $voyageVeh->setVehicule($this);
         }
 
         return $this;
@@ -142,8 +125,8 @@ class Vehicule
     {
         if ($this->voyage_veh->removeElement($voyageVeh)) {
             // set the owning side to null (unless already changed)
-            if ($voyageVeh->getVehiculeId() === $this) {
-                $voyageVeh->setVehiculeId(null);
+            if ($voyageVeh->getVehicule() === $this) {
+                $voyageVeh->setVehicule(null);
             }
         }
 

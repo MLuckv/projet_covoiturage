@@ -20,8 +20,6 @@ class Message
     /**
      * @ORM\Column(type="integer")
      */
-    
-    //private $msg_id;
 
     /**
      * @ORM\Column(type="text")
@@ -29,16 +27,16 @@ class Message
     private $msg;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class)
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $expediteur_id;
+    private $expediteur;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class)
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $destinataire_id;
+    private $destinataire;
 
     public function getId(): ?int
     {
@@ -69,26 +67,26 @@ class Message
         return $this;
     }
 
-    public function getExpediteurId(): ?user
+    public function getExpediteur(): ?user
     {
-        return $this->expediteur_id;
+        return $this->expediteur;
     }
 
-    public function setExpediteurId(?user $expediteur_id): self
+    public function setExpediteur(?user $expediteur): self
     {
-        $this->expediteur_id = $expediteur_id;
+        $this->expediteur = $expediteur;
 
         return $this;
     }
 
-    public function getDestinataireId(): ?user
+    public function getDestinataire(): ?user
     {
-        return $this->destinataire_id;
+        return $this->destinataire;
     }
 
-    public function setDestinataireId(?user $destinataire_id): self
+    public function setDestinataire(?user $destinataire): self
     {
-        $this->destinataire_id = $destinataire_id;
+        $this->destinataire = $destinataire;
 
         return $this;
     }
