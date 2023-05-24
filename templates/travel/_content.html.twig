@@ -1,0 +1,26 @@
+{% for voyage in pagination %}
+    {% if voyage.heureDepart < date() %}
+        {{ voyage.id }}
+    {% else %}
+        <div class="col-4 mx-3 my-3">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ voyage.villeDepart }}-{{ voyage.villeArrive }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        départ
+                        {{ voyage.heureDepart|date('H\\hi') }}
+                        le
+                        {{ voyage.heureDepart|date('d F') }}
+                    </h6>
+                    <p class="card-text">{{ voyage.description }}</p>
+                    <a href="{{ path('detail_list', {slug: voyage.slug}) }}" class="card-link">Plus d'info</a>
+                    <a href="#" class="card-link">Profile</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+<div class="col ml-3">
+    {{ knp_pagination_render(pagination) }}
+</div>

@@ -39,28 +39,49 @@ class VoyageRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Voyage[] Returns an array of Voyage objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('v.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('v')
+            ->orderBy('v.created_at', 'ASC')
+            ->getQuery()
+        ;
+    }
 
-//    public function findOneBySomeField($value): ?Voyage
-//    {
-//        return $this->createQueryBuilder('v')
-//            ->andWhere('v.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
+
+
+    //public function findByVilleIds($filters = [])
+    //{
+    //    $query = $this->createQueryBuilder('v')
+    //        ->where('v.active = 1');
+        // On filtre les données
+    //    if (!empty($filters)) {
+    //        $query->join('v.villeDepart', 'vd')
+    //            ->join('v.villeArrive', 'va')
+    //            ->andWhere('vd.id IN (:villes) OR va.id IN (:villes)')
+    //            ->setParameter(':villes', array_values($filters));
+    //    }
+    //   $query->orderBy('v.nomVoyage');
+    //    return $query->getQuery()->getResult();
+    //}
+
+    //verifie requete ajax à mettre dans le travel controller 
+    // if($request->get('ajax')){
+    //    return new JsonResponse([
+    //        'content' => $this->renderView('travel/_content.html.twig', 
+    //            ['pagination' => $pagination, 'ville' => $ville])
+    //    ]);
+    //}
+    //réccupere les filtre
+    // $filters = $request->get("ville");
+
+    //    public function findOneBySomeField($value): ?Voyage
+    //    {
+    //        return $this->createQueryBuilder('v')
+    //            ->andWhere('v.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
