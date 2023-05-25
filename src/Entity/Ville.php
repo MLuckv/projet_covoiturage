@@ -32,7 +32,7 @@ class Ville
 
     /**
      * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="villes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $departement;
 
@@ -56,18 +56,6 @@ class Ville
     {
         return $this->id;
     }
-
-    /*public function getCodeVille(): ?int
-    {
-        return $this->code_ville;
-    }
-
-    public function setCodeVille(int $code_ville): self
-    {
-        $this->code_ville = $code_ville;
-
-        return $this;
-    }*/
 
     public function getNomVille(): ?string
     {

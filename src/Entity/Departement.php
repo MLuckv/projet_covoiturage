@@ -20,11 +20,6 @@ class Departement
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    //private $code_departement;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $nom_departement;
@@ -33,6 +28,11 @@ class Departement
      * @ORM\OneToMany(targetEntity=Ville::class, mappedBy="departement", orphanRemoval=true)
      */
     private $villes;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $code_departement;
 
     public function __construct()
     {
@@ -43,18 +43,6 @@ class Departement
     {
         return $this->id;
     }
-
-    /*public function getCodeDepartement(): ?int
-    {
-        return $this->code_departement;
-    }
-
-    public function setCodeDepartement(int $code_departement): self
-    {
-        $this->code_departement = $code_departement;
-
-        return $this;
-    }*/
 
     public function getNomDepartement(): ?string
     {
@@ -94,6 +82,18 @@ class Departement
                 $ville->setDepartement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCodeDepartement(): ?int
+    {
+        return $this->code_departement;
+    }
+
+    public function setCodeDepartement(int $code_departement): self
+    {
+        $this->code_departement = $code_departement;
 
         return $this;
     }

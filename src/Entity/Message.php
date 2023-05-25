@@ -18,23 +18,19 @@ class Message
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-
-    /**
      * @ORM\Column(type="text")
      */
     private $msg;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $expediteur;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $destinataire;
 
@@ -42,18 +38,6 @@ class Message
     {
         return $this->id;
     }
-
-    /*public function getMsgId(): ?int //deja id pas utile
-    {
-        return $this->msg_id;
-    }
-
-    public function setMsgId(int $msg_id): self
-    {
-        $this->msg_id = $msg_id;
-
-        return $this;
-    }*/
 
     public function getMsg(): ?string
     {

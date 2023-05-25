@@ -45,6 +45,12 @@ class Vehicule
      */
     private $voyage_veh;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=user::class)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->voyage_veh = new ArrayCollection();
@@ -135,5 +141,17 @@ class Vehicule
 
     public function __toString(){
         return $this->immatriculation;
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(?user $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

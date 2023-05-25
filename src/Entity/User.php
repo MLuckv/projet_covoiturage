@@ -54,13 +54,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $created_at;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=255)
      */
     private $num_tel;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_driver;
+
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->slug = uniqid();
+        $this->is_driver = false;
     }
 
 
@@ -204,4 +217,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(){
         return $this->email;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function isIsDriver(): ?bool
+    {
+        return $this->is_driver;
+    }
+
+    public function setIsDriver(bool $is_driver): self
+    {
+        $this->is_driver = $is_driver;
+
+        return $this;
+    }
+
 }

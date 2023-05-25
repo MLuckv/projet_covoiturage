@@ -35,7 +35,7 @@ class Voyage
 
     /**
      * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="voyage_deb")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $ville_depart;
 
@@ -43,13 +43,13 @@ class Voyage
 
     /**
      * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="voyage_fin")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $ville_arrive;
 
     /**
      * @ORM\ManyToOne(targetEntity=Vehicule::class, inversedBy="voyage_veh")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $vehicule;
 
@@ -60,7 +60,7 @@ class Voyage
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;
 
