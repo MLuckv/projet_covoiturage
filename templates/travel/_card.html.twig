@@ -1,4 +1,4 @@
-{% for voyage in pagination %}
+{% for voyage in voyage %}{#pagination#}
     {% if voyage.heureDepart < date() %}
         {{ voyage.id }}
     {% else %}
@@ -20,7 +20,3 @@
         </div>
     {% endif %}
 {% endfor %}
-
-<div class="col ml-3">
-    {{ knp_pagination_render(pagination) }}
-</div>

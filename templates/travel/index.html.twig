@@ -1,14 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Travel
-{% endblock %}
+{% block title %}Liste Voyage{% endblock %}
 
 {% block body %}
-	<div class="container row">
-
-		{% include "travel/_content.html.twig"%}{# aligner 3 par ligne et colonne #}
-		
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				{% include "travel/_filter.html.twig" with {form: form} only %}
+			</div>
+			<div class="col-md-9">
+				<div class="grid">
+					{% include "travel/_card.html.twig"%}{# aligner 3 par ligne et colonne #}
+				</div>
+				<div class="col ml-3">
+					{{ knp_pagination_render(voyage) }}
+				</div>
+			</div>
+		</div>
 	</div>
-	
+
 
 {% endblock %}

@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Voyage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Voyage>
@@ -16,9 +19,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class VoyageRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $paginator;
+    
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Voyage::class);
+        $this->paginator = $paginator;
     }
 
     public function add(Voyage $entity, bool $flush = false): void
@@ -39,49 +45,32 @@ class VoyageRepository extends ServiceEntityRepository
         }
     }
 
-    public function paginationQuery()
+
+    public function findSearch(SearchData $search):PaginationInterface
     {
-        return $this->createQueryBuilder('v')
-            ->orderBy('v.created_at', 'ASC')
-            ->getQuery()
-        ;
+        $query = $this
+            ->createQueryBuilder('p')//p=voy et c=ville_dep c2=ville_arrive
+            ->select('c','p','c2')
+            ->join('p.ville_depart', 'c')
+            ->join('p.ville_arrive', 'c2');
+        
+        if (!empty($search->q)){ //permet de filtrer par rapport à la rechercher et filtre les ville 
+            $query = $query
+                ->andWhere('c.nom_ville LIKE :q')
+                ->orWhere('c2.nom_ville LIKE :q')
+                ->setParameter('q', "%{$search->q}%");
+        }
+        if (!empty($search->ville)){ //filtre par rapport au form les villes
+            $query = $query
+                ->andWhere('c.id IN (:ville)')
+                ->orWhere('c2.id IN (:ville)')
+                ->setParameter('ville', $search->ville);
+        }
+        $query = $query->getQuery();
+        return $this->paginator->paginate(
+            $query,
+            $search->page,
+            2 //nombre de voyage sur une la page
+        );
     }
-
-
-
-
-    //public function findByVilleIds($filters = [])
-    //{
-    //    $query = $this->createQueryBuilder('v')
-    //        ->where('v.active = 1');
-        // On filtre les données
-    //    if (!empty($filters)) {
-    //        $query->join('v.villeDepart', 'vd')
-    //            ->join('v.villeArrive', 'va')
-    //            ->andWhere('vd.id IN (:villes) OR va.id IN (:villes)')
-    //            ->setParameter(':villes', array_values($filters));
-    //    }
-    //   $query->orderBy('v.nomVoyage');
-    //    return $query->getQuery()->getResult();
-    //}
-
-    //verifie requete ajax à mettre dans le travel controller 
-    // if($request->get('ajax')){
-    //    return new JsonResponse([
-    //        'content' => $this->renderView('travel/_content.html.twig', 
-    //            ['pagination' => $pagination, 'ville' => $ville])
-    //    ]);
-    //}
-    //réccupere les filtre
-    // $filters = $request->get("ville");
-
-    //    public function findOneBySomeField($value): ?Voyage
-    //    {
-    //        return $this->createQueryBuilder('v')
-    //            ->andWhere('v.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }
