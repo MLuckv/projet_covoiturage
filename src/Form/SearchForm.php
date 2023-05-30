@@ -23,13 +23,20 @@ class SearchForm extends AbstractType
                     'placeholder' => 'Rechercher'
                 ]
                 ])
-            ->add('ville', EntityType::class,[
+            ->add('ville_depart', EntityType::class,[
                 'label' => false,
                 'required' => false,
                 'class' => Ville::class,
                 'expanded' => true,
                 'multiple' => true
             ]) //rajouter pour plus de champs au form et les rajouter aussi au SearchData
+            ->add('ville_arrive', EntityType::class,[
+                'label' => false,
+                'required' => false,
+                'class' => Ville::class,
+                'expanded' => true,
+                'multiple' => true
+            ])
             ;
     }
 

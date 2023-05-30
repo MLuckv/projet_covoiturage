@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Data\SearchData;
 use App\Form\SearchForm;
-use App\Repository\VilleRepository;
+use App\Repository\PlaceRepository;
+use App\Repository\UserRepository;
 use App\Repository\VoyageRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request; 
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +17,7 @@ class TravelController extends AbstractController
     /**
      * @Route("/travel", name="app_travel")
      */
-    public function index(VoyageRepository $voyageRepository, Request $request, /*PaginatorInterface $paginator,*/ VilleRepository $villeRepository): Response
+    public function index(VoyageRepository $voyageRepository, Request $request, PlaceRepository $placeRepository, UserRepository $userRepository): Response
     {
         $data = new SearchData();
         $data->page = $request->get('page', 1);
@@ -27,10 +27,13 @@ class TravelController extends AbstractController
 
         $voyage = $voyageRepository->findSearch($data);
         
-        $ville = $villeRepository->findBy([], ['nom_ville'=>'asc'] );        
+        $place = $placeRepository->findAll();
+        $user = $userRepository->findAll();
 
         return $this->render('travel/index.html.twig',[
             'voyage' => $voyage,
+            'place' => $place,
+            'user' => $user,
             'form' => $form->createView()
             ]);
     }

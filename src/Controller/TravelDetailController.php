@@ -18,7 +18,7 @@ class TravelDetailController extends AbstractController
      */
     public function list(Voyage $voyage, PlaceRepository $placeRepository): Response
     {
-        $place = $placeRepository->findBy([], ['voy'=>'asc'] );    
+        $place = $placeRepository->findBy([], ['voy'=>'asc'] );
         return $this->render('travel_details/list.html.twig', compact('voyage', 'place'));
     }
 }

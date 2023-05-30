@@ -8,11 +8,13 @@ use App\Entity\Voyage;
 use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
 
-class VoyageFixtures extends Fixture
+class VoyageFixtures extends Fixture implements DependentFixtureInterface
 {
+    private $counter = 1;
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -36,6 +38,7 @@ class VoyageFixtures extends Fixture
                 $faker->dateTimeBetween('+1 day', '+1 week'),
                 $faker->dateTimeBetween('+1 week', '+2 weeks'),
                 $faker->text(100),
+                12,
                 $manager
             );
         }
@@ -45,7 +48,7 @@ class VoyageFixtures extends Fixture
     }
 
     public function createVoyage(Ville $ville1, Ville $ville2, Vehicule $vehicule, 
-        User $user, int $nb, DateTime $dep, DateTime $arr, string $desc, ObjectManager $manager)
+        User $user, int $nb, DateTime $dep, DateTime $arr, string $desc, float $prix, ObjectManager $manager)
     {
         $voyage = new Voyage();
         $voyage->setVilleDepart($ville1);
@@ -56,9 +59,21 @@ class VoyageFixtures extends Fixture
         $voyage->setHeureDepart($dep);
         $voyage->setHeureArrive($arr);
         $voyage->setDescription($desc);
+        $voyage->setPrix($prix);
 
         $manager->persist($voyage);
 
+        $this->addReference('voy-'.$this->counter, $voyage);
+        $this->counter++;
+
         return $voyage;
+    }
+
+    public function getDependencies():array
+    {
+        return[
+            UsersFixtures::class,
+            VilleFixtures::class,
+        ];
     }
 }

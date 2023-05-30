@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 use App\Repository\VoyageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -74,10 +76,22 @@ class Voyage
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Place::class, mappedBy="voy")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    private $place;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $prix;
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
         $this->slug = uniqid();
+        $this->place = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -200,6 +214,48 @@ class Voyage
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, place>
+     */
+    public function getPlace(): Collection
+    {
+        return $this->place;
+    }
+
+    public function addPlace(place $place): self
+    {
+        if (!$this->place->contains($place)) {
+            $this->place[] = $place;
+            $place->setVoyage($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlace(place $place): self
+    {
+        if ($this->place->removeElement($place)) {
+            // set the owning side to null (unless already changed)
+            if ($place->getVoyage() === $this) {
+                $place->setVoyage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(?float $prix): self
+    {
+        $this->prix = $prix;
 
         return $this;
     }

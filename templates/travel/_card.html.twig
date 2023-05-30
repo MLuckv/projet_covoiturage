@@ -1,22 +1,27 @@
-{% for voyage in voyage %}{#pagination#}
-    {% if voyage.heureDepart < date() %}
-        {{ voyage.id }}
-    {% else %}
-        <div class="col-4 mx-3 my-3">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ voyage.villeDepart }}-{{ voyage.villeArrive }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        départ
-                        {{ voyage.heureDepart|date('H\\hi') }}
-                        le
-                        {{ voyage.heureDepart|date('d F') }}
-                    </h6>
-                    <p class="card-text">{{ voyage.description }}</p>
-                    <a href="{{ path('detail_list', {slug: voyage.slug}) }}" class="card-link">Plus d'info</a>
-                    <a href="#" class="card-link">Profile</a>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+{% for voyage in voyage %}
+	{% if voyage.heureDepart < date() %}
+		{{ voyage.id }}
+		<p>le voyage n'existe plus</p>
+	{% else %}
+		<div class="col-4 mx-3 my-3">
+			<div class="card" style="width: 18rem;">
+				<div class="card-body">
+					<h5 class="card-title">{{ voyage.villeDepart }}-{{ voyage.villeArrive }}</h5>
+					<h6 class="card-subtitle">
+						<div class="mb-2 text-muted">
+							départ
+							{{ voyage.heureDepart|date('H\\hi') }}
+							le
+							{{ voyage.heureDepart|date('d F') }}
+							pour
+							<strong>{{ voyage.prix}}€</strong>
+						</div>
+					</h6>
+					<p class="card-text">{{ voyage.description }}</p>
+					<a href="{{ path('detail_list', {slug: voyage.slug}) }}" class="card-link">Plus d'info</a>
+					<a href="{{ path('profile_user', {slug: voyage.user.slug}) }}" class="card-link">Profile</a>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 {% endfor %}

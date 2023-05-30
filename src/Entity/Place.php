@@ -23,21 +23,21 @@ class Place
     private $num_place;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $prix_place;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Voyage::class)
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     */
-    private $voy;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Voyage::class, inversedBy="place")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    private $voy;
+
+
+    public function __construct()
+    {
+    }
 
     public function getId(): ?int
     {
@@ -56,30 +56,6 @@ class Place
         return $this;
     }
 
-    public function getPrixPlace(): ?int
-    {
-        return $this->prix_place;
-    }
-
-    public function setPrixPlace(int $prix_place): self
-    {
-        $this->prix_place = $prix_place;
-
-        return $this;
-    }
-
-    public function getVoy(): ?voyage
-    {
-        return $this->voy;
-    }
-
-    public function setVoy(?voyage $voy): self
-    {
-        $this->voy = $voy;
-
-        return $this;
-    }
-
     public function getUser(): ?user
     {
         return $this->user;
@@ -88,6 +64,18 @@ class Place
     public function setUser(?user $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getVoyage(): ?Voyage
+    {
+        return $this->voy;
+    }
+
+    public function setVoyage(?Voyage $voyage): self
+    {
+        $this->voy = $voyage;
 
         return $this;
     }

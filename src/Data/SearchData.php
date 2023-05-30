@@ -19,7 +19,12 @@ class SearchData
     /**
      * @var Ville[]
      */
-    public $ville =[];
+    public $ville_arrive =[];
+
+    /**
+     * @var Ville[]
+     */
+    public $ville_depart =[]; 
 
 
 

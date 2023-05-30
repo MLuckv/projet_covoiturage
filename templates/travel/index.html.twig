@@ -9,6 +9,9 @@
 				{% include "travel/_filter.html.twig" with {form: form} only %}
 			</div>
 			<div class="col-md-9">
+				<div class="d-flex justify-content-end mb-2">
+					{{ knp_pagination_sortable(voyage, 'Prix', 'voy.prix')}}
+				</div>
 				<div class="grid">
 					{% include "travel/_card.html.twig"%}{# aligner 3 par ligne et colonne #}
 				</div>

@@ -16,7 +16,7 @@
 				<a class="nav-link" href="{{ path('app_voyage_index') }}">Ajouter Voyage</a>
 			</li>
 			{% endif %}
-			<li class="nav-item dropdown">
+			{#<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Dropdown
 				</a>
@@ -29,8 +29,7 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link disabled" href="#">Disabled</a>
-			</li>
-
+			</li>#}
 		</ul>
 		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 			{% if app.user %}
@@ -38,7 +37,7 @@
 					<a class="nav-link disabled" href="{{ path('app_logout') }}">Déconnexion</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link disabled" href="#">Profil</a>
+					<a class="nav-link disabled" href="{{ path('profile_user', {slug: app.user.slug}) }}">Profil</a>
 				</li>
 			{% else %}
 				<li class="nav-item">
