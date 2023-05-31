@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -68,12 +70,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $is_driver;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="user")
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    private $voyage_user;
+
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
         $this->slug = uniqid();
         $this->is_driver = false;
+        $this->voyage_user = new ArrayCollection();
     }
 
 
@@ -238,6 +247,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsDriver(bool $is_driver): self
     {
         $this->is_driver = $is_driver;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Voyage>
+     */
+    public function getVoyageUser(): Collection
+    {
+        return $this->voyage_user;
+    }
+
+    public function addVoyageUser(Voyage $voyage_users): self
+    {
+        if (!$this->voyage_user->contains($voyage_users)) {
+            $this->voyage_user[] = $voyage_users;
+            $voyage_users->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVoyageUser(Voyage $voyage_users): self
+    {
+        if ($this->voyage_user->removeElement($voyage_users)) {
+            // set the owning side to null (unless already changed)
+            if ($voyage_users->getUser() === $this) {
+                $voyage_users->setUser(null);
+            }
+        }
 
         return $this;
     }

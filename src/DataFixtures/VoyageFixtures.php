@@ -19,9 +19,9 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 5; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             $vil1 = $this->getReference('vil-'. $i);
-            if($i == 5){//si non erreur car vil-6 n'existe pas 
+            if($i == 6){//si non erreur car vil-6 n'existe pas 
                 $vil2 = $this->getReference('vil-'. ($i-1));
             }
             else{
@@ -38,7 +38,7 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
                 $faker->dateTimeBetween('+1 day', '+1 week'),
                 $faker->dateTimeBetween('+1 week', '+2 weeks'),
                 $faker->text(100),
-                12,
+                $faker->numberBetween(10, 32),
                 $manager
             );
         }

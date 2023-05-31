@@ -75,7 +75,7 @@ class VoyageRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query,
             $search->page,
-            2 //nombre de voyage sur une la page
+            5 //nombre de voyage sur une la page
         );
     }
 }

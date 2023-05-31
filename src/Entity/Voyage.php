@@ -60,11 +60,7 @@ class Voyage
      */
     private $created_at;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     */
-    private $user;
+    
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -86,6 +82,12 @@ class Voyage
      * @ORM\Column(type="float", nullable=true)
      */
     private $prix;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="voyage_user")
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -171,17 +173,6 @@ class Voyage
         return $this;
     }
 
-    public function getUser(): ?user
-    {
-        return $this->user;
-    }
-
-    public function setUser(?user $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
@@ -256,6 +247,18 @@ class Voyage
     public function setPrix(?float $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

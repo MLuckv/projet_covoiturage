@@ -14,7 +14,7 @@ class VilleFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
-        for($i = 1; $i <= 5; $i++){
+        for($i = 1; $i <= 6; $i++){
 
             //réccupère la ref de departement
             $dep = $this->getReference('dep-'. 1);
