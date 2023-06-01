@@ -23,16 +23,39 @@ class Message
     private $msg;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\Column(type="datetime_immutable")
      */
-    private $expediteur;
+    private $created_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\Column(type="boolean")
      */
-    private $destinataire;
+    private $is_read = 0;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sent")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $sender;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="receive")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recipient;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+
+
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -51,27 +74,64 @@ class Message
         return $this;
     }
 
-    public function getExpediteur(): ?user
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->expediteur;
+        return $this->created_at;
     }
 
-    public function setExpediteur(?user $expediteur): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
-        $this->expediteur = $expediteur;
+        $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getDestinataire(): ?user
+    public function isIsRead(): ?bool
     {
-        return $this->destinataire;
+        return $this->is_read;
     }
 
-    public function setDestinataire(?user $destinataire): self
+    public function setIsRead(bool $is_read): self
     {
-        $this->destinataire = $destinataire;
+        $this->is_read = $is_read;
 
         return $this;
     }
+
+    public function getSender(): ?User
+    {
+        return $this->sender;
+    }
+
+    public function setSender(?User $sender): self
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    public function getRecipient(): ?User
+    {
+        return $this->recipient;
+    }
+
+    public function setRecipient(?User $recipient): self
+    {
+        $this->recipient = $recipient;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
 }

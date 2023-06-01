@@ -22,6 +22,18 @@
 				{{ user.numTel }}
 			</p>
 		</div>
+		{% if app.user == user %}
+		
+		<div class="row my-3 ml-1 text-left">
+			<a href="{{path('app_messages')}}">Messagerie</a>
+		</div>
+		
+		{#<div class="row my-3 ml-1 text-left">
+			{% include "profile_detail/_passager_travel.html.twig" %}
+		</div>#}
+
+		{% endif %}
+		
 		<div class="row my-3 ml-1 text-left">
 			{% include "profile_detail/_history_travel.html.twig" %}
 		</div>

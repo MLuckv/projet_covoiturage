@@ -1,0 +1,17 @@
+
+    <h5>Voyages en tant que passager :</h5>
+     {% for app.user in place %}
+        <div>
+            <div class="card-body">
+                <h5 class="card-title">{{ userVoyage.villeDepart }}</h5>
+                <h6 class="card-subtitle">
+                    <div class="mb-2 text-muted">
+                        {% if userVoyage.heureDepart > "now" %}
+                            Départ le
+                            {{ userVoyage.heureDepart|date('d F') }}
+                        {% endif %}
+                    </div>
+                </h6>
+            </div>
+        </div>
+    {% endfor %}

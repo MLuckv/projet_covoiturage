@@ -28,5 +28,9 @@
 		</div>
 	{% endfor %}
 {% else %}
+	{% if app.user == user %}
+		<p>Aucun voyage de prévu</p>
+	{% else %}
 	<p>Aucun historique de voyage disponible pour ce membre.</p>
+	{% endif %}
 {% endif %}

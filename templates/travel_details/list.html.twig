@@ -41,9 +41,8 @@
 					<div class="col-12 mb-4">
 						<h5>Passagers :</h5>
 						{% for place in voyage.place %}
-							<div class="row mb-2 ml-3 mt-2">
-								{{ place.user.lastname }} {{ place.user.firstname }}
-								profile :
+							<div class="row mb-2 ml-2 mt-2">
+								{{ place.user.lastname }} {{ place.user.firstname }} :
 								<a href="{{ path('profile_user', { slug: place.user.slug }) }}" class="card-link">Profile</a>
 							</div>
 						{% endfor %}
