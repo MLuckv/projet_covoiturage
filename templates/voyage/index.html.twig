@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos Voyages{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row-12 my-2">
+			<h2>Vos Voyages</h2>
+		</div>
+		<div class="my-3">
+			{% if app.user.voyageUser|length == 0 %}
+				<p>vous n'avez pas publier de voyage</p>
+			{% else %}
+				<div class="row-6">
+					<p><a href="{{path('list_voyage')}}" class="btn btn-secondary">Liste de vos voyages</a>
+					Nombre de voyage publier : {{app.user.VoyageUser|length}}</p>		
+				</div>
+			{% endif %}
+
+			<div class="row-6">
+				<a href="{{path('add_voyage')}}" class="btn btn-secondary">Ajouter un voyage</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

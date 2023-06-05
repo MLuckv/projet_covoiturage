@@ -27,6 +27,9 @@
                             <div class="mt-1 mb-3">
 								Description : {{ voyage.description }}
                             </div>
+							<div class="mt-1 mb-3">
+								Vehicule modele : <i>{{ voyage.vehicule.marque }} {{ voyage.vehicule.modele }}</i> <br><p class="ml-5"> couleur : {{ voyage.vehicule.couleur }}</p>
+                            </div>
 						</div>
 						<div class="mt-2">
 							<h6>Ce voyage est proposé par :</h6>
@@ -39,13 +42,17 @@
 				</div>
 				<div class="row">
 					<div class="col-12 mb-4">
-						<h5>Passagers :</h5>
-						{% for place in voyage.place %}
-							<div class="row mb-2 ml-2 mt-2">
-								{{ place.user.lastname }} {{ place.user.firstname }} :
-								<a href="{{ path('profile_user', { slug: place.user.slug }) }}" class="card-link">Profile</a>
-							</div>
-						{% endfor %}
+						{% if voyage.place|length == 0 %}
+							<p>pas de passager pour le moment</p>
+						{% else %}
+							<h5>Passagers :</h5>
+							{% for place in voyage.place %}
+								<div class="row mb-2 ml-2 mt-2">
+									{{ place.user.lastname }} {{ place.user.firstname }} :
+									<a href="{{ path('profile_user', { slug: place.user.slug }) }}" class="card-link">Profile</a>
+								</div>
+							{% endfor %}
+						{% endif %}
 					</div>
 				</div>
 			</div>

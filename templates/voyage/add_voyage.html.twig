@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie
+{% endblock %}
+
+{% block body %}
+	<div class="mt-2 ml-3">
+		<h1>Ajouter un voyage</h1>
+	</div>
+	{{ form_start(form) }}
+
+	<div class="container">
+		<div class="row mx-3 mt-5">
+			<h5>Nombre de place</h5>
+			{{ form_row(form.nb_place) }}
+		</div>
+		<div class="row mx-3 mt-1">
+			<h4>Ville départ</h4>
+			{{ form_row(form.ville_depart) }}
+		</div>
+		<div class="row mx-3 mt-1">
+			<h4>Ville arrivée</h4>
+			{{ form_row(form.ville_arrive) }}
+		</div>
+		<div class="row mx-3 mt-1">
+			<h4>Heure départ</h4>
+			{{ form_row(form.heure_depart) }}
+		</div>
+		<div class="row mx-3 mt-1">
+			<h4>Heure arrivée</h4>
+			{{ form_row(form.heure_arrive) }}
+		</div>
+		<div class="row mx-3 mt-1">
+			<h4>Description</h4>
+			{{ form_row(form.description) }}
+		</div>
+		<div class="row mx-3 mt-1">
+			<h4>Vehicule</h4>
+			{{ form_row(form.vehicule) }}
+		</div>
+		<div class="row mx-3 mt-1">
+            <h4><label for="prixRange">Prix</label></h4>
+            <div>
+                {{ form_widget(form.prix, { 'id': 'prixRange' }) }}
+                <span id="prixValue">{{ form.vars.data.prix }}</span> euros
+            </div>    
+        </div>
+
+		<div class="row mx-3 mt-1 mb-3">
+			{{ form_row(form.submit)}}
+		</div>
+
+	</div>
+	{{ form_end(form) }}
+
+	 <script>
+        const prixRange = document.getElementById('prixRange');
+        const prixValue = document.getElementById('prixValue');
+
+        prixRange.addEventListener('input', function () {
+            prixValue.textContent = prixRange.value;
+        });
+    </script>
+	
+{% endblock %}
