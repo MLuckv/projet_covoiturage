@@ -39,27 +39,33 @@
 			{{ form_row(form.vehicule) }}
 		</div>
 		<div class="row mx-3 mt-1">
-            <h4><label for="prixRange">Prix</label></h4>
-            <div>
-                {{ form_widget(form.prix, { 'id': 'prixRange' }) }}
-                <span id="prixValue">{{ form.vars.data.prix }}</span> euros
-            </div>    
-        </div>
+			<h4>
+				<label for="prixRange">Prix</label>
+			</h4>
+			<div>
+				{{ form_widget(form.prix, { 'id': 'prixRange' }) }}
+				<span id="prixValue">{{ form.vars.data.prix }}</span>
+				euros
+			</div>
+		</div>
 
 		<div class="row mx-3 mt-1 mb-3">
 			{{ form_row(form.submit)}}
+			<div>
+				<a href="{{path('app_voyage')}}" class="btn btn-secondary btn-sm">retour</a>
+			</div>
 		</div>
 
 	</div>
 	{{ form_end(form) }}
 
-	 <script>
-        const prixRange = document.getElementById('prixRange');
-        const prixValue = document.getElementById('prixValue');
+	<script>
+		const prixRange = document.getElementById('prixRange');
+		const prixValue = document.getElementById('prixValue');
 
-        prixRange.addEventListener('input', function () {
-            prixValue.textContent = prixRange.value;
-        });
-    </script>
-	
+		prixRange.addEventListener('input', function () {
+			prixValue.textContent = prixRange.value;
+		});
+	</script>
+
 {% endblock %}

@@ -1,17 +1,29 @@
+<h5>Vos prochains voyages passagers :</h5>
 
-    <h5>Voyages en tant que passager :</h5>
-     {% for app.user in place %}
-        <div>
-            <div class="card-body">
-                <h5 class="card-title">{{ userVoyage.villeDepart }}</h5>
-                <h6 class="card-subtitle">
-                    <div class="mb-2 text-muted">
-                        {% if userVoyage.heureDepart > "now" %}
-                            Départ le
-                            {{ userVoyage.heureDepart|date('d F') }}
-                        {% endif %}
-                    </div>
-                </h6>
-            </div>
-        </div>
-    {% endfor %}
+{% for places in place %}
+	{#for correspond à un foreach et parcour le tab de place et ici je renomme l'item places#}
+	{% if places.user == app.user %}
+		{% if places.voyage.heureDepart > date() %}
+
+			<div class="col-4 ml-1 mt-3">
+				<div class="card" style="width: 18rem;">
+					<div>
+						<div class="card-body">
+							<h6 class="card-title">{{places.voyage.villeDepart}}-{{places.voyage.villeArrive}}</h6>
+							<h6 class="card-subtitle">
+								<div class="mb-2 text-muted">
+									Départ le
+									{{ places.voyage.heureDepart|date('d F') }}
+									<div>
+										<a href="{{ path('detail_list', {slug: places.voyage.slug}) }}" class="card-link">Plus d'info</a>
+									</div>
+								</div>
+							</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{% endif %}
+	{% endif %}
+{% endfor %}

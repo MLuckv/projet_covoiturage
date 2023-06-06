@@ -52,13 +52,17 @@ class VoyageRepository extends ServiceEntityRepository
             ->createQueryBuilder('voy')//voy=voyage et city_str=ville_dep city_end=ville_arrive q= recherche
             ->select('city_str','voy','city_end')
             ->join('voy.ville_depart', 'city_str')
-            ->join('voy.ville_arrive', 'city_end');
+            ->join('voy.ville_arrive', 'city_end')
+            ->andWhere('voy.heure_depart >= :currentDate') //condition pour exclure les voyages passés
+            ->setParameter('currentDate', new \DateTime())  
+            ->orderBy('voy.heure_depart', 'ASC'); // Ajoutez cet ordre pour trier par ordre croissant de date de départ
+    
         
         if (!empty($search->q)){ //permet de filtrer par rapport à la rechercher et filtre les ville 
             $query = $query
                 ->andWhere('city_str.nom_ville LIKE :q')
                 ->orWhere('city_end.nom_ville LIKE :q')
-                ->orWhere('voy.prix LIKE :q')
+                ->orWhere('voy.description LIKE :q')
                 ->setParameter('q', "%{$search->q}%");
         }
         if (!empty($search->ville_depart)){ //filtre par rapport au form les villes
@@ -71,6 +75,7 @@ class VoyageRepository extends ServiceEntityRepository
                 ->andWhere('city_end.id IN (:ville_arrive)')
                 ->setParameter('ville_arrive', $search->ville_arrive);
         }
+        
         $query = $query->getQuery();
         return $this->paginator->paginate(
             $query,

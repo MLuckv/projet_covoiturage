@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique des voyages
+{% endblock %}
+
+{% block body %}
+	<div class="mt-3 ml-4">
+		<h5>Historique des voyages :</h5>
+	</div>
+	<div class="section">
+		{% for userVoyage in userVoyages %}
+			{% if userVoyage.heureDepart < "now" %}
+				<div class="col-4 ml-1 mt-3 mb-2">
+					<div class="card" style="width: 18rem;">
+						<div>
+							<div class="card-body">
+								<h5 class="card-title">{{ userVoyage.villeDepart }}
+									-
+									{{userVoyage.villeArrive}}</h5>
+								<h6 class="card-subtitle">
+									<div class="mb-2 text-muted">
+										Effectué le
+										{{ userVoyage.heureDepart|date('d F') }}
+									</div>
+								</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+	<div class="mt-4 mb-3 ml-5">
+		<a href="{{path('list_voyage')}}" class="btn btn-secondary btn-sm">retour</a>
+	</div>
+{% endblock %}

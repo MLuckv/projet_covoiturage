@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Voyage;
 use App\Form\VoyageType;
+use App\Repository\VoyageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,7 +56,7 @@ class VoyageController extends AbstractController
             $em->persist($voyage);
             $em->flush();
 
-            $this->addFlash("voyage", "Voyage ajouter avec succès.");
+            $this->addFlash("message", "Voyage ajouter avec succès.");
             return $this->redirectToRoute("app_voyage");
         }
 
@@ -73,5 +74,16 @@ class VoyageController extends AbstractController
         $em->remove($voyage);
         $em->flush();
         return $this->redirectToRoute("list_voyage");
+    }
+
+    /**
+     * @Route("/voyage/history", name="history_voy")
+     */
+    public function history(Security $security, VoyageRepository $voyageRepository): Response
+    {
+        $user = $security->getUser();
+        $voyage = $voyageRepository->findBy([], ['created_at' => 'asc']);
+        $userVoyages = $user->getVoyageUser();
+        return $this->render('voyage/history_voyage.html.twig', compact('user', 'voyage', 'userVoyages'));
     }
 }

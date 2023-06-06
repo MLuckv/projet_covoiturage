@@ -12,13 +12,13 @@
 				<p>vous n'avez pas publier de voyage</p>
 			{% else %}
 				<div class="row-6">
-					<p><a href="{{path('list_voyage')}}" class="btn btn-secondary">Liste de vos voyages</a>
+					<p><a href="{{path('list_voyage')}}" class="btn btn-primary">Liste de vos voyages</a>
 					Nombre de voyage publier : {{app.user.VoyageUser|length}}</p>		
 				</div>
 			{% endif %}
 
 			<div class="row-6">
-				<a href="{{path('add_voyage')}}" class="btn btn-secondary">Ajouter un voyage</a>
+				<a href="{{path('add_voyage')}}" class="btn btn-primary">Ajouter un voyage</a>
 			</div>
 		</div>
 	</div>
