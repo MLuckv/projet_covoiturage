@@ -19,14 +19,10 @@ class VoyageFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        for ($i = 1; $i <= 6; $i++) {
-            $vil1 = $this->getReference('vil-'. $i);
-            if($i == 6){//si non erreur car vil-6 n'existe pas 
-                $vil2 = $this->getReference('vil-'. ($i-1));
-            }
-            else{
-                $vil2 = $this->getReference('vil-'. ($i+1));
-            }
+        for ($i = 1; $i <= 40; $i++) {
+            $vil1 = $this->getReference('vil-'. rand(1,15));
+            //if($i == 6){}else{}//si non erreur car vil-6 n'existe pas 
+            $vil2 = $this->getReference('vil-'. (rand(1,15)));
             $vehicule = $this->getReference('veh-'. rand(1,5));
             $user = $this->getReference('user-' . rand(1,5));
             $this->createVoyage(

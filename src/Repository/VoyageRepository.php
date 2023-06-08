@@ -75,12 +75,15 @@ class VoyageRepository extends ServiceEntityRepository
                 ->andWhere('city_end.id IN (:ville_arrive)')
                 ->setParameter('ville_arrive', $search->ville_arrive);
         }
-        
+        if (!empty($search->dispo)){ //filtre par rapport au form les villes
+            $query = $query
+                ->andWhere('voy.nb_place > 0');
+        }
         $query = $query->getQuery();
         return $this->paginator->paginate(
             $query,
             $search->page,
-            5 //nombre de voyage sur une la page
+            21 //nombre de voyage sur une la page
         );
     }
 }

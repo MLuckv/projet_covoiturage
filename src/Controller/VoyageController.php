@@ -41,7 +41,7 @@ class VoyageController extends AbstractController
     /**
      * @Route("/voyage/add", name="add_voyage")
      */
-    public function send(Request $request) : Response
+    public function travel_add(Request $request) : Response
     {
         $voyage = new Voyage;
         $form = $this->createForm(VoyageType::class, $voyage);

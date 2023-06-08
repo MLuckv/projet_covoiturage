@@ -46,10 +46,10 @@ class Vehicule
     private $voyage_veh;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity=Conducteur::class, inversedBy="vehicule_user")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
-    private $user;
+    private $conducteur;
 
     public function __construct()
     {
@@ -139,19 +139,19 @@ class Vehicule
         return $this;
     }
 
-    public function __toString(){
-        return $this->immatriculation;
+    public function getConducteur(): ?Conducteur
+    {
+        return $this->conducteur;
     }
 
-    public function getUser(): ?User
+    public function setConducteur(?Conducteur $conducteur): self
     {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
+        $this->conducteur = $conducteur;
 
         return $this;
+    }
+    
+    public function __toString(){
+        return $this->immatriculation;
     }
 }

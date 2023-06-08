@@ -26,6 +26,12 @@ class SearchData
      */
     public $ville_depart =[]; 
 
+    /**
+     * @var boolean
+     */
+
+    public $dispo = false;
+
 
 
 }

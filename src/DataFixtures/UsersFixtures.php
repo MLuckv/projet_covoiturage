@@ -26,6 +26,8 @@ class UsersFixtures extends Fixture
             );
         }
 
+        $this->createUser("test@test.fr", "testtest", "test", "test", "0652578489", $manager);
+
         $manager->flush();
     }
     public function createUser(string $email, string $password, string $lastname, string $firstname
