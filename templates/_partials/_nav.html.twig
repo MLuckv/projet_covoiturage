@@ -12,12 +12,12 @@
 				</a>
 			</li>
 			{% if app.user %}
-				{% if app.user.isDriver == true %}
+				{% if app.user.driver != null %}
 				<li class="nav-item active">
 					<a class="nav-link" href="{{ path('app_voyage') }}">Vos Voyages <small>(ajouter/voir)</small></a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href="{{ path('car_index') }}">Vos vehicule <small>(ajouter/voir)</small></a>
+					<a class="nav-link" href="{{ path('car_index') }}">Vos Vehicules <small>(ajouter/voir)</small></a>
 				</li>
 				{% else %}
 				<li class="nav-item active">

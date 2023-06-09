@@ -19,10 +19,7 @@ class Conducteur
      */
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
-     */
-    private $user;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=Ville::class)
@@ -40,6 +37,11 @@ class Conducteur
      */
     private $age;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="driver", cascade={"persist", "remove"})
+     */
+    private $users;
+
     public function __construct()
     {
         $this->vehicule_user = new ArrayCollection();
@@ -50,17 +52,7 @@ class Conducteur
         return $this->id;
     }
 
-    public function getUser(): ?user
-    {
-        return $this->user;
-    }
-
-    public function setUser(?user $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
+    
 
     public function getVilleUser(): ?Ville
     {
@@ -112,6 +104,28 @@ class Conducteur
     public function setAge(int $age): self
     {
         $this->age = $age;
+
+        return $this;
+    }
+
+    public function getUsers(): ?User
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?User $users): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($users === null && $this->users !== null) {
+            $this->users->setDriver(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($users !== null && $users->getDriver() !== $this) {
+            $users->setDriver($this);
+        }
+
+        $this->users = $users;
 
         return $this;
     }

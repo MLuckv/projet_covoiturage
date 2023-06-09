@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un véhicule{% endblock %}
+
+{% block body %}
+	<div class="mt-2 ml-3">
+		<h1>Ajouter un véhicule</h1>
+	</div>
+	{{ form_start(form) }}
+
+	<div class="container">
+		<div class="row mx-3 mt-5">
+			<h5>Immatriculation</h5>
+			{{ form_row(form.immatriculation) }}
+		</div>
+		<div class="row mx-3 mt-1">
+			<h4>Marque</h4>
+			{{ form_row(form.marque) }}
+		</div>
+		<div class="row mx-3 mt-1">
+			<h4>Modèle</h4>
+			{{ form_row(form.modele) }}
+		</div>
+		<div class="row mx-3 mt-1">
+			<h4>Couleur</h4>
+			{{ form_row(form.couleur) }}
+		</div>
+
+		<div class="row mx-3 mt-1 mb-3">
+			{{ form_row(form.submit)}}
+			<div>
+				<a href="{{ path('car_index') }}" class="btn btn-secondary btn-sm">Retour</a>
+			</div>
+		</div>
+
+	{{ form_end(form) }}
+{% endblock %}

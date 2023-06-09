@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Vehicule;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,11 +14,26 @@ class VehiculeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('immatriculation')
-            ->add('marque')
-            ->add('modele')
-            ->add('couleur')
-            ->add('conducteur')
+            ->add('immatriculation', TextType::class, [
+                'label' => false,
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('marque', TextType::class, [
+                'label' => false,
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('modele', TextType::class, [
+                'label' => false,
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('couleur', TextType::class, [
+                'label' => false,
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Enregistrer',
+                'attr' => ['class' => 'btn btn-primary'],
+            ])
         ;
     }
 

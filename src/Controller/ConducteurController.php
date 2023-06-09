@@ -23,7 +23,7 @@ class ConducteurController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $conducteur->setUser($this->getUser());
+            $conducteur->setUsers($this->getUser());
 
 
             $em = $this->getDoctrine()->getManager();
@@ -31,7 +31,7 @@ class ConducteurController extends AbstractController
             $em->flush();
 
             $user = $this->getUser();
-            $user->setIsDriver(true);
+            $user->setDriver($conducteur);
                 
             $em->persist($user);
             $em->flush();

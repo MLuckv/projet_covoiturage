@@ -66,11 +66,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $slug;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $is_driver;
-
-    /**
      * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="user")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
@@ -86,15 +81,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $receive;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Conducteur::class, inversedBy="users", cascade={"persist", "remove"})
+     */
+    private $driver;
+
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
         $this->slug = uniqid();
-        $this->is_driver = false;
         $this->voyage_user = new ArrayCollection();
         $this->sent = new ArrayCollection();
         $this->receive = new ArrayCollection();
+        $this->driver = null;
     }
 
 
@@ -251,17 +251,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isIsDriver(): ?bool
-    {
-        return $this->is_driver;
-    }
-
-    public function setIsDriver(bool $is_driver): self
-    {
-        $this->is_driver = $is_driver;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Voyage>
@@ -349,6 +338,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $receive->setRecipient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDriver(): ?Conducteur
+    {
+        return $this->driver;
+    }
+
+    public function setDriver(?Conducteur $driver): self
+    {
+        $this->driver = $driver;
 
         return $this;
     }
