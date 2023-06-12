@@ -11,33 +11,31 @@
 					<span class="sr-only">(current)</span>
 				</a>
 			</li>
-			{% if app.user %}
-				{% if app.user.driver != null %}
-				<li class="nav-item active">
-					<a class="nav-link" href="{{ path('app_voyage') }}">Vos Voyages <small>(ajouter/voir)</small></a>
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="{{ path('car_index') }}">Vos Vehicules <small>(ajouter/voir)</small></a>
-				</li>
-				{% else %}
-				<li class="nav-item active">
-					<a class="nav-link" href="{{ path('app_driver') }}">Devenir conducteur</a>
-				</li>	
-				{% endif %}
-			{% endif %}
 		</ul>
+
+		{# modif deconnexion et connexion afin de mettre des icone à la place 
+			https://getbootstrap.com/docs/5.3/components/dropdowns/ pour dropdown
+		#}
 
 		<ul class="navbar-nav me-3 mb-2 mb-lg-0">
 			{% if app.user %}
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_messages') }}">Messagerie</a>
+					<a class="nav-link text-primary" href="{{ path('app_messages') }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
+  <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"/>
+</svg></a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('profile_user', {slug: app.user.slug}) }}">Profil</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
-				</li>
+				<div class="dropdown">
+  <button class="btn btn-bg-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            image de profile + cliquer amene sur profile
+          </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{{ path('profile_user', {slug: app.user.slug}) }}">Profile</a></li>
+    <li><a class="dropdown-item" href="{{ path('app_voyage') }}">Mes Voyages</a></li>{% if app.user.driver != null %}
+	<li><a class="dropdown-item" href="{{ path('car_index') }}">Mes Vehicules</a></li>{% else %}
+	<li><a class="dropdown-item" href="{{ path('app_driver') }}">Devenir conducteur</a></li> {% endif %}
+	<li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
+  </ul>
+</div>
 			{% else %}
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
