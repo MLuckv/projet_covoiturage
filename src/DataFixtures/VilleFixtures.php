@@ -5,10 +5,11 @@ namespace App\DataFixtures;
 use App\Entity\Ville;
 use App\Entity\Departement;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
 
-class VilleFixtures extends Fixture
+class VilleFixtures extends Fixture implements DependentFixtureInterface
 {
     private $counter_v = 1;
     public function load(ObjectManager $manager): void
@@ -39,5 +40,12 @@ class VilleFixtures extends Fixture
         $this->counter_v++;
 
         return $ville;
+    }
+
+    public function getDependencies():array
+    {
+        return[
+            DepartementFixtures::class,
+        ];
     }
 }
