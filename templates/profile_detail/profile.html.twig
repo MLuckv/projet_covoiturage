@@ -6,12 +6,31 @@
 
 {% block body %}
 
+
 	<div class="container">
 		<div class="row mt-3 mb-2 text-center">
 			<h5 class="">
 				{{user.lastname}}
 				{{user.firstname}}
 			</h5>
+			{% if user.average == null %}
+				<div class="text-right text-secondary">
+					<h6>
+						<i>cette utilisateur n'a pas d'avis</i>
+					</h6>
+				</div>
+			{% else %}
+				{% if app.user == user %}
+					<div class="text-right mb-5">Votre Moyenne de note est
+						{{user.average|number_format(2,'.',',')}}/6
+						<br>
+						<a href="{{path('marks_list')}}" class="btn text-primary">voir vos avis</a>
+					</div>
+				{% else %}
+					<div class="text-right mb-5">La Moyenne de cette utilisateur est
+						{{user.average|number_format(2,'.',',')}}/6</div>
+				{% endif %}
+			{% endif %}
 		</div>
 		<div class="row mt-3 mb-2 text-left">
 			<h6 class="mr-2">Contact :</h6>
@@ -23,15 +42,15 @@
 			</p>
 		</div>
 		{% if app.user == user %}
-		
-		<div class="row my-3 ml-1 text-left">
-			<a href="{{path('app_messages')}}">Messagerie</a>
-		</div>
-		
-		<div class="row my-3 ml-1 text-left">
-			{% include "profile_detail/_passager_travel.html.twig" %}
-		</div>
+
+			<div class="row my-3 ml-1 text-left">
+				<a href="{{path('app_messages')}}">Messagerie</a>
+			</div>
+
+			<div class="row my-3 ml-1 text-left">
+				{% include "profile_detail/_passager_travel.html.twig" %}
+			</div>
 
 		{% endif %}
-		
-		{% endblock %}
+
+	{% endblock %}

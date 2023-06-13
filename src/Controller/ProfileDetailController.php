@@ -20,8 +20,8 @@ class ProfileDetailController extends AbstractController
      */
     public function list(User $user, VoyageRepository $voyageRepository, PlaceRepository $placeRepository): Response
     {
-        $place = $placeRepository->findBy([], ['voy'=>'asc'] );
-        $voyage = $voyageRepository->findBy([], ['created_at' => 'asc']);
+        $place = $placeRepository->findBy([], ['voy'=>'desc'] );
+        $voyage = $voyageRepository->findBy([], ['created_at' => 'desc']);
         $userVoyages = $user->getVoyageUser();
         return $this->render('profile_detail/profile.html.twig', compact('user','voyage', 'userVoyages', 'place'));
     }

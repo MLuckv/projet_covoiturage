@@ -86,6 +86,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $driver;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Mark::class, mappedBy="user_mark", orphanRemoval=true)
+     */
+    private $user_marks;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Mark::class, mappedBy="receive_mark", orphanRemoval=true)
+     */
+    private $receive_marks;
+
+    private $average = null;
 
     public function __construct()
     {
@@ -95,6 +106,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->sent = new ArrayCollection();
         $this->receive = new ArrayCollection();
         $this->driver = null;
+        $this->user_marks = new ArrayCollection();
+        $this->receive_marks = new ArrayCollection();
     }
 
 
@@ -352,6 +365,85 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->driver = $driver;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Mark>
+     */
+    public function getUserMarks(): Collection
+    {
+        return $this->user_marks;
+    }
+
+    public function addUserMark(Mark $userMark): self
+    {
+        if (!$this->user_marks->contains($userMark)) {
+            $this->user_marks[] = $userMark;
+            $userMark->setUserMark($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserMark(Mark $userMark): self
+    {
+        if ($this->user_marks->removeElement($userMark)) {
+            // set the owning side to null (unless already changed)
+            if ($userMark->getUserMark() === $this) {
+                $userMark->setUserMark(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Mark>
+     */
+    public function getReceiveMarks(): Collection
+    {
+        return $this->receive_marks;
+    }
+
+    public function addReceiveMark(Mark $receiveMark): self
+    {
+        if (!$this->receive_marks->contains($receiveMark)) {
+            $this->receive_marks[] = $receiveMark;
+            $receiveMark->setReceiveMark($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceiveMark(Mark $receiveMark): self
+    {
+        if ($this->receive_marks->removeElement($receiveMark)) {
+            // set the owning side to null (unless already changed)
+            if ($receiveMark->getReceiveMark() === $this) {
+                $receiveMark->setReceiveMark(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAverage()
+    {
+        $mark = $this->receive_marks;
+
+        if($mark->toArray() === []){
+            $this->average = null;
+            return $this->average;
+        }
+
+        $total = 0;
+        foreach($mark as $marks){
+            $total += $marks->getMark();
+        }
+
+        $this->average = $total / count($mark);
+
+        return $this->average;
     }
 
 }

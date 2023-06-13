@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Noter -
+	
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+<div class="container">
+    <div class="row my-2">{{form_row(form.mark)}}</div>
+    <div class="row my-2">{{form_row(form.texte)}}</div>
+    <div class="row my-2">{{form_row(form.submit)}}</div>
+</div>
+{{ form_end(form) }}
+{% endblock %}

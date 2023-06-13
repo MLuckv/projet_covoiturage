@@ -1,11 +1,15 @@
-<h5>Vos prochains voyages passagers :</h5>
+{% set boucle = 1 %}
+{% set voyage_passager = 1 %}
 
 {% for places in place %}
 	{#for correspond à un foreach et parcour le tab de place et ici je renomme l'item places#}
 	{% if places.user == app.user %}
 		{% if places.voyage.heureDepart > date() %}
-
-			<div class="col-4 ml-1 mt-3">
+			{% if voyage_passager == 1 %}
+				<h5>Vos prochains voyages passagers :</h5>
+			{% endif %}
+			{% set voyage_passager = voyage_passager + 1 %}
+			<div class="col-4 ml-1 my-3">
 				<div class="card" style="width: 18rem;">
 					<div>
 						<div class="card-body">
@@ -23,7 +27,41 @@
 					</div>
 				</div>
 			</div>
+		{% else %}
+
+		
+			
+
+			{% if boucle == 1 %}
+				<div class="mt-1 ml-2">
+					<h6>Noter vos derniers voyages</h6>
+				</div>
+			{% endif %}
+			{% set boucle = boucle + 1 %}
+			<div class="col-4 ml-1 mt-3">
+				<div class="card" style="width: 18rem;">
+					<div>
+						<div class="card-body">
+							<h6 class="card-title">{{places.voyage.villeDepart}}-{{places.voyage.villeArrive}}</h6>
+							<h6 class="card-subtitle">
+								<div class="mb-2 text-muted">
+									<a href="{{ path('marks_add', {id: places.voyage.user.id}) }}" class="btn text-primary">noter ce voyage</a>
+								</div>
+							</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 
 		{% endif %}
 	{% endif %}
 {% endfor %}
+{% if voyage_passager == 1 %}
+	<div class="text-secondary my-2">
+		<h6>
+			<i>vous n'avez aucun voyages de prévu</i>
+		</h6>
+	</div>
+{% endif %}

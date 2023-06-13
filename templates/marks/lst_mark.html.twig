@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos Avis{% endblock %}
+
+{% block body %}
+    {% if userReceivedMark|length == 0 %}<div class="text-secondary"><h6><i>vous n'avez pas recu d'avis</i></h6></div>{% endif %}
+    
+    {% for marks in userReceivedMark %}
+        <div class="col-4 ml-1 my-3">
+				<div class="card" style="width: 18rem;">
+					<div>
+						<div class="card-body">
+							<h6 class="card-title"><i>{{marks.mark}}/6</i></h6>
+							<h6 class="card-subtitle">
+								<div class="mb-2 text-muted">
+									Avis : 
+									<div>{{marks.texte}}</div>
+								</div>
+							</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+    {% endfor %}
+{% endblock %}
