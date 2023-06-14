@@ -98,6 +98,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     private $average = null;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Images::class, mappedBy="user_picture", cascade={"persist", "remove"})
+     */
+    private $profile_picture;
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
@@ -444,6 +449,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->average = $total / count($mark);
 
         return $this->average;
+    }
+
+    public function getProfilePicture(): ?Images
+    {
+        return $this->profile_picture;
+    }
+
+    public function setProfilePicture(Images $profile_picture): self
+    {
+        // set the owning side of the relation if necessary
+        if ($profile_picture->getUserPicture() !== $this) {
+            $profile_picture->setUserPicture($this);
+        }
+
+        $this->profile_picture = $profile_picture;
+
+        return $this;
     }
 
 }

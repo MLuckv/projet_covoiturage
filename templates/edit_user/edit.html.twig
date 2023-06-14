@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification {{app.user.lastname}} - {{app.user.firstname}}  {% endblock %}
+
+{% block body %}
+    <h1>Modifier vos Données</h1>
+
+    {{ include('edit_user/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <div><a href="{{ path('profile_user', {slug: app.user.slug}) }}">retour</a></div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Voyage{% endblock %}
+
+{% block body %}
+    <h1>Edit Voyage</h1>
+
+    {{ include('admin/admin_voyage/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_admin_voyage_index') }}">back to list</a>
+
+    {{ include('admin/admin_voyage/_delete_form.html.twig') }}
+{% endblock %}

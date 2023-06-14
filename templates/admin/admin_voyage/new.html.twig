@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Voyage{% endblock %}
+
+{% block body %}
+    <h1>Create new Voyage</h1>
+
+    {{ include('admin_voyage/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_voyage_index') }}">back to list</a>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Images;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\LoginAuthenticator;
@@ -21,18 +22,43 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, UserAuthenticatorInterface $userAuthenticatorInterface, LoginAuthenticator $loginAuthenticator): Response
     {
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+        if ($form->isSubmitted() && $form->isValid()) { 
+            
+            // encode the plain password    
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
+            
+            //reccup l'image
+            if($form->get('profile_picture')->getData() != null){
+                //reccup img 
+                $images = $form->get('profile_picture')->getData();
+                //boucle sur les images
+                   //genere un nom de fichier 
+                   $fichier = md5(uniqid()) . '.' . $images->guessExtension();
+                   //on copie le dichier dans le dossier uploads
+                   $images->move(
+                        $this->getParameter('image_directory'),
+                        $fichier
+                   );
+                   //stock img dans bdd (son nom)
+                   $img = new Images();
+                   $img->setName($fichier);
+                   $user->setProfilePicture($img);
+               
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($img);
+                $em->flush();
+                $this->addFlash("message", "image ajouter avec succès");
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();

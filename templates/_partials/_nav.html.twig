@@ -10,15 +10,15 @@
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
 				<a class="nav-link" href="{{ path('app_travel') }}">
-						<stong>Liste Voyage</strong>
-						<span class="sr-only">(current)</span>
+					<stong>Liste Voyage</strong>
+					<span class="sr-only">(current)</span>
 				</a>
 			</li>
 		</ul>
 
 		{# modif deconnexion et connexion afin de mettre des icone à la place 
-									https://getbootstrap.com/docs/5.3/components/dropdowns/ pour dropdown
-								#}
+											https://getbootstrap.com/docs/5.3/components/dropdowns/ pour dropdown
+										#}
 
 		<ul class="navbar-nav me-3 mb-2 mb-lg-0">
 			{% if app.user %}
@@ -33,13 +33,19 @@
 				</li>
 
 				<div class="btn-group mr-4">
-					<a class="btn" href="{{ path('profile_user', {slug: app.user.slug}) }}" aria-expanded="false">{#{% if app.user.image == null %}{% else %}<img src="" width="40px" height="40px" style="border-radius: 50%">{% endif %}#}
-						<img src="{{asset('/assets/img/profile.png')}}" width="40px" height="40px" style="border-radius: 50%">
+					<a class="btn" href="{{ path('profile_user', {slug: app.user.slug}) }}" aria-expanded="false">
+						{% if app.user.profilePicture == null %}
+							<img src="{{asset('/assets/img/profile.png')}}" width="40px" height="40px" style="border-radius: 50%">
+						{% else %}
+							<img src="{{ asset('/uploads/' ~ app.user.profilePicture.name) }}" width="40px" height="40px" style="border-radius: 50%">
+						{% endif %}
 					</a>
 					<button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
 						<span class="visually-hidden">Toggle Dropdown</span>
 					</button>
-					<ul class="dropdown-menu"> {#<li><a class="dropdown-item" href=""></a></li>#}
+					<ul
+						class="dropdown-menu">
+						{#<li><a class="dropdown-item" href=""></a></li>#}
 						<li>
 							<a class="dropdown-item" href="{{ path('app_voyage') }}">Mes Voyages</a>
 						</li>
