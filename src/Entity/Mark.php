@@ -56,6 +56,11 @@ class Mark
      */
     private $texte;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Place::class, inversedBy="marks_places")
+     */
+    private $places;
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
@@ -123,6 +128,18 @@ class Mark
     public function setTexte(?string $texte): self
     {
         $this->texte = $texte;
+
+        return $this;
+    }
+
+    public function getPlaces(): ?Place
+    {
+        return $this->places;
+    }
+
+    public function setPlaces(?Place $places): self
+    {
+        $this->places = $places;
 
         return $this;
     }

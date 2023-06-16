@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlaceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,9 +36,15 @@ class Place
      */
     private $voy;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Mark::class, mappedBy="places")
+     */
+    private $marks_places;
+
 
     public function __construct()
     {
+        $this->marks_places = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,6 +84,36 @@ class Place
     public function setVoyage(?Voyage $voyage): self
     {
         $this->voy = $voyage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Mark>
+     */
+    public function getMarksPlaces(): Collection
+    {
+        return $this->marks_places;
+    }
+
+    public function addMarksPlace(Mark $marksPlace): self
+    {
+        if (!$this->marks_places->contains($marksPlace)) {
+            $this->marks_places[] = $marksPlace;
+            $marksPlace->setPlaces($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarksPlace(Mark $marksPlace): self
+    {
+        if ($this->marks_places->removeElement($marksPlace)) {
+            // set the owning side to null (unless already changed)
+            if ($marksPlace->getPlaces() === $this) {
+                $marksPlace->setPlaces(null);
+            }
+        }
 
         return $this;
     }

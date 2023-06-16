@@ -29,30 +29,32 @@
 			</div>
 		{% else %}
 
-		
-			
 
-			{% if boucle == 1 %}
-				<div class="mt-1 ml-2">
-					<h6>Noter vos derniers voyages</h6>
-				</div>
-			{% endif %}
-			{% set boucle = boucle + 1 %}
-			<div class="col-4 ml-1 mt-3">
-				<div class="card" style="width: 18rem;">
-					<div>
-						<div class="card-body">
-							<h6 class="card-title">{{places.voyage.villeDepart}}-{{places.voyage.villeArrive}}</h6>
-							<h6 class="card-subtitle">
-								<div class="mb-2 text-muted">
-									<a href="{{ path('marks_add', {id: places.voyage.user.id}) }}" class="btn text-primary">noter ce voyage</a>
-								</div>
-							</h6>
+			{% if not places.marksPlaces|length %}
+				{% if boucle == 1 %}
+					<div class="mt-1 ml-2">
+						<h6>Noter vos derniers voyages</h6>
+					</div>
+
+				{% endif %}
+				{% set boucle = boucle + 1 %}
+				<div class="col-4 ml-1 mt-3">
+					<div class="card" style="width: 18rem;">
+						<div>
+							<div class="card-body">
+								<h6 class="card-title">{{ places.voyage.villeDepart }}-{{ places.voyage.villeArrive }}</h6>
+								{% if app.user %}
+									<h6 class="card-subtitle">
+										<div class="mb-2 text-muted">
+											<a href="{{ path('marks_add', {id_user: places.voyage.user.id, id_place: places.id}) }}" class="btn text-primary">noter ce voyage</a>
+										</div>
+									</h6>
+								{% endif %}
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-
+			{% endif %}
 
 
 		{% endif %}
