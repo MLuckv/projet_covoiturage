@@ -17,8 +17,8 @@
 		</ul>
 
 		{# modif deconnexion et connexion afin de mettre des icone à la place 
-											https://getbootstrap.com/docs/5.3/components/dropdowns/ pour dropdown
-										#}
+													https://getbootstrap.com/docs/5.3/components/dropdowns/ pour dropdown
+												#}
 
 		<ul class="navbar-nav me-3 mb-2 mb-lg-0">
 			{% if app.user %}
@@ -46,10 +46,11 @@
 					<ul
 						class="dropdown-menu">
 						{#<li><a class="dropdown-item" href=""></a></li>#}
-						<li>
-							<a class="dropdown-item" href="{{ path('app_voyage') }}">Mes Voyages</a>
-						</li>
 						{% if app.user.driver != null %}
+							<li>
+								<a class="dropdown-item" href="{{ path('app_voyage') }}">Mes Voyages</a>
+							</li>
+
 							<li>
 								<a class="dropdown-item" href="{{ path('car_index') }}">Mes Vehicules</a>
 							</li>
