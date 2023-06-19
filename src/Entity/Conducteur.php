@@ -131,6 +131,6 @@ class Conducteur
     }
 
     public function __toString(){
-        return strval($this->id);
+        return $this->users->getFirstname(). ' '. $this->users->getLastname();
     }
 }

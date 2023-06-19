@@ -28,7 +28,7 @@ class Mark
     /**
      * @ORM\Column(type="integer")
      * @Assert\Positive
-     * @Assert\LessThan(6)
+     * @Assert\LessThan(7)
      */
 
 

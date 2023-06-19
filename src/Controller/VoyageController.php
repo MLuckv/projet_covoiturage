@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secur;
 use Symfony\Component\Security\Core\Security;
 
 class VoyageController extends AbstractController
@@ -67,12 +68,15 @@ class VoyageController extends AbstractController
 
     /**
      * @Route("/voyage/delete/{id}", name="delete_voy")
+     * @Secur("is_granted('ROLE_USER') and user === voyage.getUser()")
      */
     public function delete(Voyage $voyage): Response
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($voyage);
         $em->flush();
+        
+        $this->addFlash("message", "Voyage supprimer.");
         return $this->redirectToRoute("list_voyage");
     }
 

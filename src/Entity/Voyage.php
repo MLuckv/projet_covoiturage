@@ -221,7 +221,7 @@ class Voyage
     {
         if (!$this->place->contains($place)) {
             $this->place[] = $place;
-            $place->setVoyage($this);
+            $place->setVoy($this);
         }
 
         return $this;
@@ -231,8 +231,8 @@ class Voyage
     {
         if ($this->place->removeElement($place)) {
             // set the owning side to null (unless already changed)
-            if ($place->getVoyage() === $this) {
-                $place->setVoyage(null);
+            if ($place->getVoy() === $this) {
+                $place->setVoy(null);
             }
         }
 
@@ -262,4 +262,14 @@ class Voyage
 
         return $this;
     }
+
+    public function __toString(){
+        return $this->ville_depart->getNomVille() . ' - '. $this->ville_arrive->getNomVille();
+    }
+
+    // besoin de transformer les date en int pour marcher 
+    //public function getTempsVoy()
+    //{
+    //    return $this->heure_arrive - $this->heure_depart;
+    //}
 }

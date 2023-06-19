@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secur;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -72,12 +73,15 @@ class VehiculeController extends AbstractController
 
     /**
      * @Route("/delete/{id}", name="delete")
+     * @Secur("is_granted('ROLE_USER') and user.getDriver() === vehicule.getConducteur()")
      */
     public function delete(Vehicule $vehicule): Response
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($vehicule);
         $em->flush();
+        $this->addFlash("message", "Véhicule supprimé.");
+
         return $this->redirectToRoute("car_list");
     }
 

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secur;
 
 class MessagesController extends AbstractController
 {
@@ -57,6 +58,7 @@ class MessagesController extends AbstractController
 
     /**
      * @Route("/read/{id}", name="read")
+     * @Secur("is_granted('ROLE_USER') and user === message.getRecipient() or user === message.getSender()")
      */
     public function read(Message $message): Response
     {
@@ -70,6 +72,7 @@ class MessagesController extends AbstractController
 
     /**
      * @Route("/message/delete/{id}", name="delete_msg")
+     * @Secur("is_granted('ROLE_USER') and user === message.getRecipient() or user === message.getSender()")
      */
     public function delete(Message $message): Response
     {

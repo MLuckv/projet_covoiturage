@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Secur;
 
 class EditUserController extends AbstractController
 {
@@ -27,14 +28,15 @@ class EditUserController extends AbstractController
 
      /**
      * @Route("/{id}/edit/user", name="edit_user")
+     * @Secur("is_granted('ROLE_USER') and user === users")
      */
-    public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $users, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(EditUserType::class, $user);
+        $form = $this->createForm(EditUserType::class, $users);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($user->getProfilePicture() == null){
+            if($users->getProfilePicture() == null){
                 if($form->get('profile_picture')->getData() != null){
                     //reccup img 
                     $images = $form->get('profile_picture')->getData();
@@ -52,7 +54,7 @@ class EditUserController extends AbstractController
                        //stock img dans bdd (son nom)
                        $img = new Images();
                        $img->setName($fichier);
-                       $img->setUserPicture($user);
+                       $img->setUserPicture($users);
                        //$user->setProfilePicture($img);
                    
                     $em = $this->getDoctrine()->getManager();
@@ -63,17 +65,17 @@ class EditUserController extends AbstractController
             }
 
             //hash le password
-            $user->setPassword(
+            $users->setPassword(
                 $userPasswordHasher->hashPassword(
-                    $user,
+                    $users,
                     $form->get('password')->getData()
                 )
             );
 
-            $entityManager->persist($user);
+            $entityManager->persist($users);
             $entityManager->flush();
 
-            $userRepository->add($user, true);
+            $userRepository->add($users, true);
             $this->addFlash("message", "modification effectué avec succès");
 
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
@@ -81,7 +83,7 @@ class EditUserController extends AbstractController
         }
 
         return $this->renderForm('edit_user/edit.html.twig', [
-            'user' => $user,
+            'user' => $users,
             'form' => $form,
         ]);
     }

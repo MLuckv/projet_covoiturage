@@ -4,7 +4,7 @@
 {% for places in place %}
 	{#for correspond à un foreach et parcour le tab de place et ici je renomme l'item places#}
 	{% if places.user == app.user %}
-		{% if places.voyage.heureDepart > date() %}
+		{% if places.voy.heureDepart > date() %}
 			{% if voyage_passager == 1 %}
 				<h5>Vos prochains voyages passagers :</h5>
 			{% endif %}
@@ -13,13 +13,13 @@
 				<div class="card" style="width: 18rem;">
 					<div>
 						<div class="card-body">
-							<h6 class="card-title">{{places.voyage.villeDepart}}-{{places.voyage.villeArrive}}</h6>
+							<h6 class="card-title">{{places.voy.villeDepart}}-{{places.voy.villeArrive}}</h6>
 							<h6 class="card-subtitle">
 								<div class="mb-2 text-muted">
 									Départ le
-									{{ places.voyage.heureDepart|date('d F') }}
+									{{ places.voy.heureDepart|date('d F') }}
 									<div>
-										<a href="{{ path('detail_list', {slug: places.voyage.slug}) }}" class="card-link">Plus d'info</a>
+										<a href="{{ path('detail_list', {slug: places.voy.slug}) }}" class="card-link">Plus d'info</a>
 									</div>
 								</div>
 							</h6>
@@ -42,11 +42,11 @@
 					<div class="card" style="width: 18rem;">
 						<div>
 							<div class="card-body">
-								<h6 class="card-title">{{ places.voyage.villeDepart }}-{{ places.voyage.villeArrive }}</h6>
+								<h6 class="card-title">{{ places.voy.villeDepart }}-{{ places.voy.villeArrive }}</h6>
 								{% if app.user %}
 									<h6 class="card-subtitle">
 										<div class="mb-2 text-muted">
-											<a href="{{ path('marks_add', {id_user: places.voyage.user.id, id_place: places.id}) }}" class="btn text-primary">noter ce voyage</a>
+											<a href="{{ path('marks_add', {id_user: places.voy.user.id, id_place: places.id}) }}" class="btn text-primary">noter ce voyage</a>
 										</div>
 									</h6>
 								{% endif %}

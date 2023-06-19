@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Vehicule;
 use App\Entity\Ville;
 use App\Entity\Voyage;
+use App\Repository\VehiculeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -63,6 +64,11 @@ class VoyageType extends AbstractType
             ])
             ->add('vehicule', EntityType::class, [
                 'class' => Vehicule::class,
+                /*'query_builder' => function (VehiculeRepository $er){
+                    return $er->createQueryBuilder('v')
+                        ->where('v.conducteur = :conducteur')
+                        ->setParameter('conducteur', $this->getUser()->getDriver());
+                },*/
                 'label' => false
             ])
             ->add('submit', SubmitType::class, [

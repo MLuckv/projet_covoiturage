@@ -119,7 +119,7 @@ class CartController extends AbstractController
                 $place = new Place();
                 $place->setNumPlace($nbPlace);
                 $place->setUser($this->getUser());
-                $place->setVoyage($voyage);
+                $place->setVoy($voyage);
             
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($place);

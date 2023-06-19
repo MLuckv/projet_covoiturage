@@ -76,12 +76,12 @@ class Place
         return $this;
     }
 
-    public function getVoyage(): ?Voyage
+    public function getVoy(): ?Voyage
     {
         return $this->voy;
     }
 
-    public function setVoyage(?Voyage $voyage): self
+    public function setVoy(?Voyage $voyage): self
     {
         $this->voy = $voyage;
 
