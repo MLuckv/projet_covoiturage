@@ -15,9 +15,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class VoyageType extends AbstractType
 {
+    private $token;
+    public function __construct(TokenStorageInterface $token)
+    {
+        $this->token = $token;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -64,11 +70,11 @@ class VoyageType extends AbstractType
             ])
             ->add('vehicule', EntityType::class, [
                 'class' => Vehicule::class,
-                /*'query_builder' => function (VehiculeRepository $er){
+                'query_builder' => function (VehiculeRepository $er){
                     return $er->createQueryBuilder('v')
                         ->where('v.conducteur = :conducteur')
-                        ->setParameter('conducteur', $this->getUser()->getDriver());
-                },*/
+                        ->setParameter('conducteur', $this->token->getToken()->getUser()->getDriver());
+                },
                 'label' => false
             ])
             ->add('submit', SubmitType::class, [

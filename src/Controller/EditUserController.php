@@ -40,7 +40,6 @@ class EditUserController extends AbstractController
                 if($form->get('profile_picture')->getData() != null){
                     //reccup img 
                     $images = $form->get('profile_picture')->getData();
-                    //boucle sur les images
 
                        //genere un nom de fichier 
                        $fichier = md5(uniqid()) . '.' . $images->guessExtension();
