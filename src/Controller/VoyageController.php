@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Voyage;
 use App\Form\VoyageType;
 use App\Repository\VoyageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -89,5 +90,28 @@ class VoyageController extends AbstractController
         $voyage = $voyageRepository->findBy([], ['created_at' => 'asc']);
         $userVoyages = $user->getVoyageUser();
         return $this->render('voyage/history_voyage.html.twig', compact('user', 'voyage', 'userVoyages'));
+    }
+
+
+
+    /**
+     * @Route("/voyage/edit/{id}", name="edit_voy")
+     * @Secur("is_granted('ROLE_USER') and user === voyage.getUser()")
+     */
+    public function edit(Voyage $voyage, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(VoyageType::class, $voyage);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            $this->addFlash("message", "Modification effectuée avec succès");
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+        }
+    
+        return $this->renderForm('voyage/edit.html.twig', [
+            'voyage' => $voyage,
+            'form' => $form,
+        ]);
     }
 }

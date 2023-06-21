@@ -9,7 +9,7 @@
 	</div>
 	<div class="section">
 		{% for userVoyage in userVoyages %}
-			{% if userVoyage.heureDepart < "now" %}
+			{% if userVoyage.heureDepart < date() %}
 				<div class="col-4 ml-1 mt-3 mb-2">
 					<div class="card" style="width: 18rem;">
 						<div>

@@ -32,7 +32,7 @@
 		{% endfor %}
 
 
-		{% if app.request.attributes.get('_route') not in ['app_register','app_reset_password'] %}
+		{% if app.request.attributes.get('_route') not in ['app_register','app_reset_password', 'app_login'] %}
 			{#désactive navbar dans inscription#}
 			{% include "_partials/_nav.html.twig" %}
 		{% endif %}
