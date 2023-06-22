@@ -38,7 +38,7 @@ class PlaceFixtures extends Fixture implements DependentFixtureInterface
         $place = new Place;
         $place->setUser($user);
         $place->setNumPlace($num_place);
-        $place->setVoyage($voy);
+        $place->setVoy($voy);
         $manager->persist($place);
 
         $this->addReference('pl-'.$this->counter_p, $place);
