@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Departement;
+use App\Entity\Images;
 use App\Entity\Message;
 use App\Entity\Place;
 use App\Entity\User;
@@ -44,6 +45,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Vehicule', 'fas fa-car', Vehicule::class);
         yield MenuItem::linkToCrud('Voyage', 'fas fa-plane', Voyage::class);
         yield MenuItem::linkToCrud('Place', 'fas fa-check', Place::class);
+        yield MenuItem::linkToCrud('Images', 'fas fa-image', Images::class);
 
 
     }
