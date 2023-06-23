@@ -14,8 +14,12 @@
 						{{ voyage.heureDepart|date('H\\hi') }}
 						le
 						{{ voyage.heureDepart|date('d F') }}
+						{% if voyage.prix == 0 %}
+						<strong>gratuit</strong>
+						{% else %}	
 						pour
 						<strong>{{ voyage.prix}}€</strong>
+						{% endif %}
 					</div>
 				</h6>
 				<p class="card-text">{{ voyage.description }}</p>

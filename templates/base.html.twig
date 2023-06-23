@@ -31,6 +31,13 @@
 			</div>
 		{% endfor %}
 
+		{% for error in app.flashes("error") %}
+			<div class="aler alert-danger alert-dismissible fade show" role="alert">
+				{{error}}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		{% endfor %}
+
 
 		{% if app.request.attributes.get('_route') not in ['app_register','app_reset_password', 'app_login'] %}
 			{#désactive navbar dans inscription#}

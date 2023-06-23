@@ -111,17 +111,24 @@ class CartController extends AbstractController
     public function purchase(SessionInterface $session)
     {
         $panier = $session->get("panier", []);
-    
+        $em = $this->getDoctrine()->getManager();
+
         foreach ($panier as $voyageId => $nbPlace) {
             $voyage = $this->getDoctrine()->getRepository(Voyage::class)->find($voyageId);
         
             if ($voyage) {
+                // Vérifier si le nombre de places demandées dépasse la disponibilité
+                if ($nbPlace > $voyage->getNbPlace()) {
+                    $session->set("panier", []); // Vider le panier
+                    $this->addFlash("error", "La quantité demandée pour le voyage ". $voyage->getVilleDepart() . " - ". $voyage->getVilleArrive() ." dépasse la disponibilité. Votre panier a été vidé.");
+                    return $this->redirectToRoute("cart_index"); 
+                }
+
                 $place = new Place();
                 $place->setNumPlace($nbPlace);
                 $place->setUser($this->getUser());
                 $place->setVoy($voyage);
-            
-                $em = $this->getDoctrine()->getManager();
+                    
                 $em->persist($place);
             
                 $voyage->setNbPlace($voyage->getNbPlace() - $nbPlace);

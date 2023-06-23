@@ -60,6 +60,16 @@
 		</tbody>
 
 		{% if dataPanier|length > 0 %}
+			{% if total == 0 %}
+			<tfoot>
+				<tr>
+					<td colspan="3">votre panier est gratuit</td>
+					<td>
+						<a href="{{path("cart_purchase")}}" class="btn btn-primary">obtenir</a>
+					</td>
+				</tr>
+			</tfoot>	
+			{% else %}
 			<tfoot>
 				<tr>
 					<td colspan="3">Total</td>
@@ -70,6 +80,7 @@
 					</td>
 				</tr>
 			</tfoot>
+			{% endif %}
 		{% endif %}
 	</table>
 
