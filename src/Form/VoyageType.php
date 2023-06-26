@@ -52,14 +52,14 @@ class VoyageType extends AbstractType
                 ],
                 'label'=> false
             ])
-            ->add('prix', RangeType::class, [
+            /*->add('prix', RangeType::class, [
                 'label' => 'Prix',
                 'attr' => [
                     'min' => 0,
                     'max' => 100,
                     'step' => 1,
                 ],
-            ])
+            ])*/
             ->add('ville_depart', EntityType::class, [
                 'class' => Ville::class,
                 'label' => false

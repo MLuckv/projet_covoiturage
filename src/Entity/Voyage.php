@@ -94,6 +94,7 @@ class Voyage
         $this->created_at = new \DateTimeImmutable();
         $this->slug = uniqid();
         $this->place = new ArrayCollection();
+        $this->prix = 0;
     }
 
     public function getId(): ?int
